@@ -1,0 +1,51 @@
+flowchart TD
+    Start[Start Application] --> Init[Initialize System]
+    Init --> Config[Load Configuration]
+    Config --> DB[Initialize SQLite Database]
+    DB --> MQTT[Start MQTT Client]
+    
+    MQTT --> Connect[Connect to Brokers]
+    Connect --> Subscribe[Subscribe to Topics]
+    Subscribe --> StartAPI[Start FastAPI Server]
+    
+    StartAPI --> APIRunning[API Running:8000]
+    APIRunning --> Wait[Enter Main Loop]
+    
+    Wait --> MQTTMsg{MQTT Message?}
+    MQTTMsg -- Yes --> Parse[Parse Message]
+    MQTTMsg -- No --> APIReq{API Request?}
+    
+    Parse --> Validate[Validate Data]
+    Validate --> Store[Store in Database]
+    Store --> CheckAlert[Check Alerts]
+    CheckAlert --> Wait
+    
+    APIReq -- Yes --> Route[Route API Request]
+    APIReq -- No --> HealthCheck{Health Check?}
+    
+    Route --> QueryDB[Query Database]
+    QueryDB --> Format[Format Response]
+    Format --> SendResponse[Send JSON/HTML]
+    SendResponse --> Wait
+    
+    HealthCheck -- Yes --> Verify[Verify Connections]
+    HealthCheck -- No --> Wait
+    
+    Verify --> LogHealth[Log Status]
+    LogHealth --> Wait
+    
+    MQTTMsg -- Error --> MQTTError[Reconnect MQTT]
+    APIReq -- Error --> APIError[Return Error Response]
+    Validate -- Invalid --> LogError[Log Invalid Message]
+    Store -- DB Error --> DBError[Retry/Log]
+    
+    MQTTError --> Wait
+    APIError --> Wait
+    LogError --> Wait
+    DBError --> Wait
+    
+    CheckAlert --> Threshold{Alert Condition?}
+    Threshold -- Yes --> CreateAlert[Create Alert]
+    Threshold -- No --> Wait
+    CreateAlert --> Notify[Send Notification]
+    Notify --> Wait

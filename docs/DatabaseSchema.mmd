@@ -1,0 +1,48 @@
+erDiagram
+    MQTT_MESSAGES {
+        INTEGER id PK "Primary Key, Auto-increment"
+        DATETIME timestamp "Message receipt time"
+        TEXT topic "MQTT topic path"
+        TEXT payload "Raw message content"
+        INTEGER qos "Quality of Service level 0,1,2"
+        BOOLEAN retained "Retained message flag"
+        TEXT message_id "Unique message identifier"
+        TEXT broker_source "Source broker URL"
+    }
+    
+    SENSOR_DATA {
+        INTEGER id PK "Primary Key, Auto-increment"
+        TEXT device_id "Unique device identifier"
+        TEXT sensor_type "temperature, humidity, etc."
+        REAL value "Numeric sensor reading"
+        TEXT unit "Measurement unit °C, %, etc."
+        DATETIME timestamp "Data timestamp"
+        TEXT raw_topic "Original MQTT topic"
+        TEXT location "Device location optional"
+        TEXT data_quality "good, warning, error"
+    }
+    
+    DATA_SOURCES {
+        INTEGER id PK "Primary Key"
+        TEXT broker_url "MQTT broker address"
+        TEXT topic_pattern "Subscription pattern #, +"
+        TEXT description "Human-readable description"
+        BOOLEAN is_active "Active subscription flag"
+        DATETIME last_message "Last received message time"
+        INTEGER message_count "Total messages received"
+    }
+    
+    SYSTEM_ALERTS {
+        INTEGER id PK "Primary Key"
+        TEXT alert_type "threshold, offline, error"
+        TEXT device_id "Related device"
+        TEXT message "Alert description"
+        TEXT severity "info, warning, critical"
+        DATETIME triggered_at "Alert creation time"
+        BOOLEAN is_acknowledged "Alert status"
+        DATETIME acknowledged_at "Acknowledgment time"
+    }
+    
+    MQTT_MESSAGES ||--o{ SENSOR_DATA : "parses_to"
+    DATA_SOURCES ||--o{ MQTT_MESSAGES : "provides"
+    SENSOR_DATA ||--o{ SYSTEM_ALERTS : "triggers"

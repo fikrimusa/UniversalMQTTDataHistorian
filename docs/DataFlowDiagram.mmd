@@ -1,0 +1,48 @@
+flowchart TD
+    subgraph ExternalSources[External Data Sources]
+        A[Public MQTT Brokers<br/>test.mosquitto.org:1883]
+        B[HiveMQ Public Broker<br/>broker.hivemq.com:1883]
+        C[EMQX Public Broker<br/>broker.emqx.io:1883]
+        D[Virtual Device Simulator<br/>Local Python Script]
+    end
+
+    A --> E[MQTT Client<br/>Paho-MQTT Library]
+    B --> E
+    C --> E
+    D --> E
+
+    E --> F{Message Received<br/>on_message callback}
+    
+    F --> G[Parse Message<br/>JSON/Text/CSV]
+    G --> H[Validate Data<br/>Required Fields Check]
+    H --> I[Normalize Schema<br/>Standardize Format]
+    I --> J[Insert into SQLite<br/>Timestamp+Topic+Payload]
+    
+    J --> K[SQLite Database<br/>mqtt_data.db]
+    
+    subgraph APILayer [FastAPI Web Layer]
+        L[FastAPI Server<br/>Port 8000]
+        M[REST API Endpoints<br/>/api/*]
+        N[Auto-generated Docs<br/>/docs]
+        O[Web Dashboard<br/>/dashboard]
+    end
+    
+    K --> L
+    L --> M
+    L --> N
+    L --> O
+    
+    M --> P[API Clients<br/>Postman, curl, scripts]
+    N --> Q[Developers<br/>Interactive API Testing]
+    O --> R[End Users<br/>Web Browser UI]
+    
+    P --> S[JSON Responses<br/>Filtered Data]
+    Q --> T[Swagger UI<br/>API Exploration]
+    R --> U[Charts & Tables<br/>Real-time Display]
+    
+    %% Optional enhancements:
+    J --> V[Alert Checking<br/>Threshold Detection]
+    V --> W[Alert Logging<br/>System Alerts Table]
+    
+    U --> X[User Actions<br/>Filter, Export, Refresh]
+    X --> M

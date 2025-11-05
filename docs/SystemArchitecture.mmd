@@ -1,0 +1,39 @@
+graph TB
+    subgraph "Data Sources"
+        A[Public MQTT Brokers<br/>test.mosquitto.org]
+        B[HiveMQ Public Broker<br/>broker.hivemq.com]
+        C[Device Simulator<br/>Python Script]
+    end
+
+    subgraph "Core System"
+        D[MQTT Client Manager<br/>Paho-MQTT]
+        E[Message Parser]
+        F[SQLite Database]
+    end
+
+    subgraph "FastAPI Server"
+        G[FastAPI Application]
+        H[Auto-generated Docs<br/>/docs]
+        I[REST API Endpoints]
+        J[Web Dashboard<br/>Static HTML]
+    end
+
+    subgraph "Clients"
+        K[Web Browser]
+        L[API Clients]
+        M[curl / Postman]
+    end
+
+    A --> D
+    B --> D
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    G --> I
+    G --> J
+    H --> K
+    I --> L
+    I --> M
+    J --> K
