@@ -64,7 +64,7 @@ python3 src/deviceSimulator.py
 - SQLite Database: `mqtt_data.db`
 - REST API Documentation: `http://localhost:8000/docs`
 
-![IotMessageDashboard](/docs/IotMessageDashboard.png)
+![IotMessageDashboard](/docs/IoTMessageDashboard.png)
 
 ![Database](/docs/database.png)
 
