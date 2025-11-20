@@ -158,7 +158,7 @@ if __name__ == "__main__":
         # Full simulation
         simulator = DeviceSimulator()
         
-        # You can customize duration and interval
+        # Can customize duration and interval
         duration = 300  # 5 minutes
         interval = 10   # 10 seconds between device updates
         

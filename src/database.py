@@ -69,4 +69,19 @@ def getRecentMessages(limit=10):
 		} 
 		for msg in messages
 	]
-	
+
+def getMessageCount():
+    conn = sqlite3.connect('mqttData.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT COUNT(*) FROM mqttMessages')
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+def getUniqueTopics():
+    conn = sqlite3.connect('mqttData.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT DISTINCT topic FROM mqttMessages')
+    topics = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return topics

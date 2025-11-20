@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Message Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>IoT Message Dashboard</h1>
+            <p>Real-time monitoring of MQTT messages and sensor data</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalMessages">0</div>
+                <div class="stat-label">Total Messages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="uniqueTopics">0</div>
+                <div class="stat-label">Unique Topics</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="mqttStatus">Unknown</div>
+                <div class="stat-label">MQTT Status</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="websocketStatus">Connecting...</div>
+                <div class="stat-label">WebSocket</div>
+            </div>
+        </div>
+
+        <div class="sensor-grid" id="sensorsGrid">
+            <!-- Sensor cards will be populated by JavaScript -->
+        </div>
+
+        <div class="messages-section">
+            <h2>Recent Messages (Live)</h2>
+            <div class="message-list" id="messageList">
+                <!-- Messages will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

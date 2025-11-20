@@ -2,6 +2,8 @@
 import time
 from database import saveMessage
 from messageParser import MessageParser
+from websocketManager import addMessageToQueue
+from datetime import datetime
 
 class MQTTClient:
     def __init__(self):
@@ -45,6 +47,17 @@ class MQTTClient:
                 qos=msg.qos,
                 retained=msg.retain
             )
+
+            websocket_message = {
+                "type": "new_message",
+                "messageId": messageId,
+                "topic": msg.topic,
+                "payload": payload,
+                "parsedData": parsedData,
+                "timestamp": datetime.now().isoformat()
+            }
+
+            addMessageToQueue(websocket_message)
             
             sensorInfo = parsedData['sensorInfo']
             if sensorInfo['isSensorData'] and sensorInfo['numericValues']:
