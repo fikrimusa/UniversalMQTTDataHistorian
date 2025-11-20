@@ -1,0 +1,9 @@
+# Create requirements.txt
+cat > requirements.txt << 'EOF'
+fastapi==0.104.1
+uvicorn==0.24.0
+paho-mqtt==1.6.1
+EOF
+
+# Install
+pip install -r requirements.txt
