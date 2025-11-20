@@ -1,4 +1,4 @@
 # System Architecture
 
 <!-- Include the diagram -->
-![Architecture Diagram](/docs/SystemArchitecture.mmd)
+![Architecture Diagram](https://raw.githubusercontent.com/fikrimusa/UniversalMQTTDataHistorian/refs/heads/main/docs/SystemArchitecture.mmd)
